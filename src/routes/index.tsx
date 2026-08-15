@@ -1,24 +1,55 @@
+import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import { AnnouncementBar } from "@/components/funnel/AnnouncementBar";
+import { Hero } from "@/components/funnel/Hero";
+import { PainPoints } from "@/components/funnel/PainPoints";
+import { TruthSection } from "@/components/funnel/TruthSection";
+import { BundleGrid } from "@/components/funnel/BundleGrid";
+import { ValueStack } from "@/components/funnel/ValueStack";
+import { Testimonials } from "@/components/funnel/Testimonials";
+import { Guarantee } from "@/components/funnel/Guarantee";
+import { Faq } from "@/components/funnel/Faq";
+import { Footer } from "@/components/funnel/Footer";
+import { StickyCta } from "@/components/funnel/StickyCta";
+import { trackPageView } from "@/lib/tracking";
+
+const TITLE = "Pack Definitivo Pérdida de Peso — 6 E-books por $22.000";
+const DESCRIPTION =
+  "Descubrí por qué las dietas tradicionales fallan y desbloqueá tu metabolismo con 6 guías prácticas en PDF. Pago único, acceso inmediato y garantía de 7 días.";
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: TITLE },
+      { name: "description", content: DESCRIPTION },
+      { property: "og:title", content: TITLE },
+      { property: "og:description", content: DESCRIPTION },
+      { property: "og:type", content: "product" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
+  useEffect(() => {
+    trackPageView();
+  }, []);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <main>
+      <AnnouncementBar />
+      <Hero />
+      <PainPoints />
+      <TruthSection />
+      <BundleGrid />
+      <ValueStack />
+      <Testimonials />
+      <Guarantee />
+      <Faq />
+      <Footer />
+      <StickyCta />
+    </main>
   );
 }
