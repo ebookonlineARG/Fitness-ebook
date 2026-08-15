@@ -7,7 +7,8 @@ export function BundleGrid() {
     <section id="pack" className="px-4 py-14">
       <div className="mx-auto max-w-6xl">
         <h2 className="text-center text-2xl font-black sm:text-4xl">
-          Todo lo que recibís hoy <span className="text-gradient-green">(6 e-books)</span>
+          Todo lo que recibís hoy{" "}
+          <span className="text-gradient-green text-shadow-heading">(6 e-books)</span>
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-center text-muted-foreground">
           Comprás el libro principal y los otros 5 se suman gratis. Sin upsells escondidos.

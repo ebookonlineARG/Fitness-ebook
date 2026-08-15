@@ -22,8 +22,8 @@ export function Hero() {
           </p>
           <h1 className="mt-4 text-3xl font-black sm:text-5xl">
             Por qué las dietas tradicionales fallan y cómo{" "}
-            <span className="text-gradient-green">desbloquear tu metabolismo</span> definitivamente
-            (sin dietas de hambre ni pastillas)
+            <span className="text-gradient-green text-shadow-heading">desbloquear tu metabolismo</span>{" "}
+            definitivamente (sin dietas de hambre ni pastillas)
           </h1>
           <p className="mt-5 text-base text-muted-foreground sm:text-lg">
             Un sistema directo, sin rodeos y respaldado por la ciencia en 6 guías prácticas que te
