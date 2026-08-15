@@ -119,11 +119,15 @@
 @utility text-gradient-green {
   background-image: linear-gradient(
     100deg,
-    var(--success),
-    color-mix(in oklab, var(--success) 55%, var(--gold))
+    color-mix(in oklab, var(--success) 75%, var(--gold)),
+    color-mix(in oklab, var(--success) 45%, black)
   );
   background-clip: text;
   color: transparent;
+}
+
+@utility text-shadow-heading {
+  text-shadow: 0 1px 2px oklch(0 0 0 / 0.45);
 }
 
 @utility surface-card {
