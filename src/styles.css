@@ -42,10 +42,12 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-heading: var(--heading);
   --font-display: "Anton", "Arial Narrow", sans-serif;
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
   --shadow-glow-green: 0 18px 50px -12px color-mix(in oklab, var(--success) 55%, transparent);
   --shadow-hard: 0 24px 60px -20px oklch(0 0 0 / 0.75);
+  --shadow-text: 0 1px 2px oklch(0 0 0 / 0.4);
 }
 
 :root {
