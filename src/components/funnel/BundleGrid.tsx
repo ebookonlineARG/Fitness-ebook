@@ -61,12 +61,25 @@ export function BundleGrid() {
                 ))}
               </ul>
 
-              <div className="mt-5 flex items-baseline justify-between border-t border-border pt-4">
-                <span className="text-sm text-muted-foreground line-through">
-                  {formatARS(book.value)}
-                </span>
-                <span className="font-display text-xl text-success">
-                  {book.isMain ? formatARS(OFFER_PRICE) : "$0 ARS"}
+              <div className="mt-5 border-t border-border pt-4">
+                <div className="flex items-baseline justify-between gap-2">
+                  <span className="flex flex-col">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                      Precio normal
+                    </span>
+                    <span className="price-old text-sm">{formatARS(book.value)}</span>
+                  </span>
+                  <span className="flex flex-col items-end">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-success">
+                      Hoy
+                    </span>
+                    <span className="price-now text-xl">
+                      {book.isMain ? formatARS(OFFER_PRICE) : "GRATIS"}
+                    </span>
+                  </span>
+                </div>
+                <span className="save-badge mt-3">
+                  Ahorrás {formatARS(book.isMain ? book.value - OFFER_PRICE : book.value)}
                 </span>
               </div>
             </motion.article>
