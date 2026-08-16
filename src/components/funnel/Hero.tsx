@@ -31,12 +31,13 @@ export function Hero() {
           </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-3 text-sm">
-            <span className="rounded-full border border-border bg-surface px-3 py-1 text-muted-foreground line-through">
+            <span className="price-old rounded-full border border-border bg-surface px-3 py-1">
               Valor real {formatARS(TOTAL_VALUE)}
             </span>
-            <span className="rounded-full bg-success/15 px-3 py-1 font-bold text-success">
+            <span className="rounded-full border border-success/40 bg-success/15 px-3 py-1 font-bold text-success">
               Hoy {formatARS(OFFER_PRICE)}
             </span>
+            <span className="save-badge">Ahorrás {formatARS(TOTAL_VALUE - OFFER_PRICE)} · 81% off</span>
             <span className="text-muted-foreground">
               (libro principal {formatARS(MAIN_PRICE)} + 5 bonus gratis)
             </span>

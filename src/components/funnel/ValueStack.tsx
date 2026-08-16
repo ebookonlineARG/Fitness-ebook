@@ -24,29 +24,26 @@ export function ValueStack() {
             <div key={row.label} className="flex items-start justify-between gap-4 py-4">
               <dt className="text-sm sm:text-base">{row.label}</dt>
               <dd className="shrink-0 text-right">
-                <span className="block text-xs text-muted-foreground line-through">
-                  {formatARS(row.from)}
-                </span>
-                <span className="font-display text-lg text-success">{row.to}</span>
+                <span className="price-old block text-xs">{formatARS(row.from)}</span>
+                <span className="price-now mt-1 block text-lg">{row.to}</span>
               </dd>
             </div>
           ))}
           <div className="flex items-center justify-between py-4">
             <dt className="text-sm font-bold uppercase sm:text-base">Valor total del pack</dt>
-            <dd className="font-display text-xl text-muted-foreground line-through">
-              {formatARS(TOTAL_VALUE)}
-            </dd>
+            <dd className="price-old font-display text-xl">{formatARS(TOTAL_VALUE)}</dd>
           </div>
         </dl>
 
-        <div className="mt-2 rounded-2xl bg-success/15 p-5 text-center">
+        <div className="mt-2 rounded-2xl border border-success/40 bg-success/15 p-5 text-center">
           <p className="text-xs font-bold uppercase tracking-widest text-success">
             Precio de oferta hoy
           </p>
-          <p className="mt-1 font-display text-4xl text-success sm:text-5xl">
-            {formatARS(OFFER_PRICE)}
-          </p>
-          <p className="mt-1 text-xs text-muted-foreground">Ahorrás {formatARS(TOTAL_VALUE - OFFER_PRICE)} (81% off)</p>
+          <p className="price-old mx-auto mt-2 text-base">antes {formatARS(TOTAL_VALUE)}</p>
+          <p className="price-now mt-1 text-4xl sm:text-5xl">{formatARS(OFFER_PRICE)}</p>
+          <span className="save-badge mt-3">
+            Ahorrás {formatARS(TOTAL_VALUE - OFFER_PRICE)} · 81% off
+          </span>
         </div>
 
         <div className="mt-6">
