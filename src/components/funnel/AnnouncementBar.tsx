@@ -25,7 +25,7 @@ export function AnnouncementBar() {
   return (
     <div className="sticky top-0 z-50 w-full border-b border-danger/40 bg-danger/15 backdrop-blur-md">
       <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-3 gap-y-1 px-3 py-2 text-center">
-        <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-danger sm:text-sm">
+        <span className="inline-flex items-center gap-1.5 text-xs font-bold text-foreground sm:text-sm">
           <Flame className="size-4" />
           Oferta por tiempo limitado: 81% de descuento hasta hoy
         </span>
