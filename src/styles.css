@@ -110,29 +110,35 @@
 
   h1,
   h2,
-  h3,
   .font-display {
     font-family: var(--font-display);
     color: var(--color-heading);
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
     text-transform: uppercase;
-    line-height: 1.03;
-    text-shadow: var(--shadow-text);
+    line-height: 1.14;
+    text-shadow: none;
+  }
+
+  /* Subtítulos y títulos de tarjeta: tipografía legible, sin mayúsculas ni condensada */
+  h3 {
+    font-family: var(--font-sans);
+    color: var(--color-heading);
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+    line-height: 1.3;
+    text-shadow: none;
   }
 }
 
 @utility text-gradient-green {
-  background-image: linear-gradient(
-    100deg,
-    color-mix(in oklab, var(--success) 85%, white),
-    color-mix(in oklab, var(--success) 55%, var(--gold))
-  );
-  background-clip: text;
-  color: transparent;
+  background-image: none;
+  background-clip: border-box;
+  color: color-mix(in oklab, var(--success) 82%, white);
 }
 
 @utility text-shadow-heading {
-  text-shadow: 0 1px 2px oklch(0 0 0 / 0.45);
+  text-shadow: none;
 }
 
 @utility surface-card {
