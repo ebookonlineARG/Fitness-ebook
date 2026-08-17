@@ -1,16 +1,9 @@
-import cover1Asset from "@/assets/ebook-1.png.asset.json";
-import cover2Asset from "@/assets/ebook-2.png.asset.json";
-import cover3Asset from "@/assets/ebook-3.png.asset.json";
-import cover4Asset from "@/assets/ebook-4.jpg.asset.json";
-import cover5Asset from "@/assets/ebook-5.jpg.asset.json";
-import cover6Asset from "@/assets/ebook-6.jpg.asset.json";
-
-const cover1 = cover1Asset.url;
-const cover2 = cover2Asset.url;
-const cover3 = cover3Asset.url;
-const cover4 = cover4Asset.url;
-const cover5 = cover5Asset.url;
-const cover6 = cover6Asset.url;
+const cover1 = "/images/ebook-1.png";
+const cover2 = "/images/ebook-2.png";
+const cover3 = "/images/ebook-3.png";
+const cover4 = "/images/ebook-4.jpg";
+const cover5 = "/images/ebook-5.jpg";
+const cover6 = "/images/ebook-6.jpg";
 
 export const OFFER_PRICE = 22000;
 export const MAIN_PRICE = 35000;

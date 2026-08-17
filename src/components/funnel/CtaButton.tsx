@@ -27,9 +27,31 @@ export function CtaButton({
     setLoading(true);
     trackInitiateCheckout(OFFER_PRICE);
     try {
+      // 1. Try Cloudflare Pages Function endpoint
+      const res = await fetch("/api/create-preference", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ origin: window.location.origin }),
+      });
+
+      if (res.ok) {
+        const data = (await res.json()) as { initPoint?: string };
+        if (data.initPoint) {
+          window.location.href = data.initPoint;
+          return;
+        }
+      }
+
+      // 2. Fallback to TanStack Start Server Function if available
       const result = await checkout({ data: { origin: window.location.origin } });
-      window.location.href = result.initPoint;
-    } catch {
+      if (result?.initPoint) {
+        window.location.href = result.initPoint;
+        return;
+      }
+
+      throw new Error("No init_point returned");
+    } catch (err) {
+      console.error("Checkout initiation error:", err);
       toast.error("No pudimos abrir el checkout", {
         description: "Volvé a intentar en unos segundos o escribinos por WhatsApp.",
       });

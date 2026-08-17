@@ -1,6 +1,5 @@
 import { motion } from "motion/react";
 import { AlertTriangle, Check } from "lucide-react";
-import coverAsset from "@/assets/ebook-1.png.asset.json";
 
 const truths = [
   "Los mitos fitness que te vendieron como “ciencia” y frenan tus resultados.",
@@ -42,7 +41,7 @@ export function TruthSection() {
             </ul>
           </div>
           <img
-            src={coverAsset.url}
+            src="/images/ebook-1.png"
             alt="Portada del e-book La Verdad Agridulce de Perder Peso"
             loading="lazy"
             width={563}

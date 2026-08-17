@@ -1,11 +1,11 @@
 {
-  "version": 1,
-  "asset_id": "adbaa02e-59d3-493b-aee1-8d0dfd8ac00a",
-  "project_id": "e9272d67-270c-43b5-8e2e-417cc9b0dfa4",
-  "url": "/__l5e/assets-v1/adbaa02e-59d3-493b-aee1-8d0dfd8ac00a/cardio-salud.pdf",
-  "r2_key": "a/v1/e9272d67-270c-43b5-8e2e-417cc9b0dfa4/adbaa02e-59d3-493b-aee1-8d0dfd8ac00a/cardio-salud.pdf",
-  "original_filename": "cardio-salud.pdf",
-  "size": 4305437,
-  "content_type": "application/pdf",
-  "created_at": "2026-08-17T00:50:44Z"
+    "version":  1,
+    "asset_id":  "adbaa02e-59d3-493b-aee1-8d0dfd8ac00a",
+    "project_id":  "e9272d67-270c-43b5-8e2e-417cc9b0dfa4",
+    "url":  "/downloads/cardio-salud.pdf",
+    "r2_key":  "a/v1/e9272d67-270c-43b5-8e2e-417cc9b0dfa4/adbaa02e-59d3-493b-aee1-8d0dfd8ac00a/cardio-salud.pdf",
+    "original_filename":  "cardio-salud.pdf",
+    "size":  4305437,
+    "content_type":  "application/pdf",
+    "created_at":  "2026-08-17T00:50:44Z"
 }

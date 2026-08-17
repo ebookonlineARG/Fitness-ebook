@@ -1,11 +1,11 @@
 {
-  "version": 1,
-  "asset_id": "316c8be9-1179-4bac-b8f5-06b60d88378d",
-  "project_id": "e9272d67-270c-43b5-8e2e-417cc9b0dfa4",
-  "url": "/__l5e/assets-v1/316c8be9-1179-4bac-b8f5-06b60d88378d/hero-stack.jpg",
-  "r2_key": "a/v1/e9272d67-270c-43b5-8e2e-417cc9b0dfa4/316c8be9-1179-4bac-b8f5-06b60d88378d/hero-stack.jpg",
-  "original_filename": "hero-stack.jpg",
-  "size": 114586,
-  "content_type": "image/jpeg",
-  "created_at": "2026-08-17T00:08:35Z"
+    "version":  1,
+    "asset_id":  "316c8be9-1179-4bac-b8f5-06b60d88378d",
+    "project_id":  "e9272d67-270c-43b5-8e2e-417cc9b0dfa4",
+    "url":  "/images/hero-stack.jpg",
+    "r2_key":  "a/v1/e9272d67-270c-43b5-8e2e-417cc9b0dfa4/316c8be9-1179-4bac-b8f5-06b60d88378d/hero-stack.jpg",
+    "original_filename":  "hero-stack.jpg",
+    "size":  114586,
+    "content_type":  "image/jpeg",
+    "created_at":  "2026-08-17T00:08:35Z"
 }

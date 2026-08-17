@@ -1,6 +1,5 @@
 import { motion } from "motion/react";
 import { GraduationCap, Users, BookOpen } from "lucide-react";
-import autorAsset from "@/assets/autor-alejandro.jpg.asset.json";
 
 const stats = [
   { icon: GraduationCap, value: "8 años", label: "como profesor de educación física" },
@@ -19,7 +18,7 @@ export function Author() {
         className="surface-card mx-auto grid max-w-5xl items-center gap-8 p-6 sm:p-10 md:grid-cols-[280px_1fr]"
       >
         <img
-          src={autorAsset.url}
+          src="/images/autor-alejandro.jpg"
           alt="Alejandro Gómez, profesor de educación física y autor de los 6 e-books"
           loading="lazy"
           width={1024}

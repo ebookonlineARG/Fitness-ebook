@@ -16,12 +16,16 @@ export const startCheckout = createServerFn({ method: "POST" })
       externalReference,
     });
 
-    await supabaseAdmin.from("orders").insert({
-      email: data.email ?? null,
-      preference_id: preference.preferenceId,
-      external_reference: externalReference,
-      status: "pending",
-    });
+    try {
+      await supabaseAdmin.from("orders").insert({
+        email: data.email ?? null,
+        preference_id: preference.preferenceId,
+        external_reference: externalReference,
+        status: "pending",
+      });
+    } catch (err) {
+      console.warn("[Checkout] Supabase order tracking error (non-fatal):", err);
+    }
 
     return { initPoint: preference.initPoint, ref: externalReference };
   });
