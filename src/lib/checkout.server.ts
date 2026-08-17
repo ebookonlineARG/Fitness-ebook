@@ -50,11 +50,11 @@ export async function createPreference(opts: {
       external_reference: opts.externalReference,
       statement_descriptor: "PACK EBOOKS",
       back_urls: {
-        success: `${base}/thank-you`,
-        failure: `${base}/?status=failure`,
-        pending: `${base}/?status=pending`,
-      },
-      auto_return: "approved",
+    success: "https://fitness-ebook.pages.dev/thank-you",
+    failure: "https://fitness-ebook.pages.dev/?status=failure",
+    pending: "https://fitness-ebook.pages.dev/?status=pending",
+  },
+  auto_return: "approved",      auto_return: "approved",
       notification_url: `${base}/api/public/webhooks/mercadopago`,
     }),
   });
