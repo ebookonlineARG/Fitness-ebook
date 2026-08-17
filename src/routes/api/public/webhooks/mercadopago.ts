@@ -64,11 +64,6 @@ async function handle(request: Request) {
     }
   }
 
-  if (payment.status === "approved" && email && orderId) {
-    const downloads = await signDownloadUrls();
-    const sent = await sendDeliveryEmail(email, downloads);
-    if (sent) await supabaseAdmin.from("orders").update({ email_sent: true }).eq("id", orderId);
-  }
 
   return new Response(JSON.stringify({ ok: true }), {
     status: 200,
