@@ -11,14 +11,19 @@ const TITLE = "¡Compra confirmada! Descargá tus 6 e-books";
 const DESCRIPTION =
   "Acceso inmediato a los 6 e-books en PDF del Pack Definitivo de Pérdida de Peso. Descargalos directamente desde esta página.";
 
-export const Route = createFileRoute("/thank-you")({
-  validateSearch: z.object({
+// Permitimos cualquier parámetro extra que Mercado Pago decida enviar
+const searchSchema = z
+  .object({
     status: z.string().optional(),
     collection_status: z.string().optional(),
     collection_id: z.string().optional(),
     payment_id: z.string().optional(),
     ref: z.string().optional(),
-  }),
+  })
+  .passthrough();
+
+export const Route = createFileRoute("/thank-you")({
+  validateSearch: (search) => searchSchema.parse(search),
   head: () => ({
     meta: [
       { title: TITLE },
@@ -34,10 +39,13 @@ export const Route = createFileRoute("/thank-you")({
 });
 
 function ThankYou() {
-  const search = useSearch({ from: "/thank-you" });
-  const paymentId = search.collection_id ?? search.payment_id;
-  const status = search.status ?? search.collection_status;
-  const approved = status === "approved" && Boolean(paymentId);
+  const search = useSearch({ from: "/thank-you" }) as Record<string, string | undefined>;
+  
+  const paymentId = search.collection_id || search.payment_id;
+  const status = search.status || search.collection_status;
+  
+  // Si el status es approved, se habilita la descarga
+  const approved = status === "approved";
 
   useEffect(() => {
     if (approved) trackPurchase(OFFER_PRICE);
@@ -55,7 +63,7 @@ function ThankYou() {
               ¡Felicitaciones! Tu pago fue aprobado
             </h1>
             <p className="mt-3 text-muted-foreground">
-              Tu compra está confirmada (pago #{paymentId}). Descargá los 6 e-books en PDF ahora
+              Tu compra está confirmada {paymentId ? `(pago #${paymentId})` : ""}. Descargá los 6 e-books en PDF ahora
               mismo desde los botones de abajo. Guardalos en tu celular o compu: el acceso es de por
               vida.
             </p>
@@ -70,7 +78,7 @@ function ThankYou() {
                 >
                   <span>
                     Descargar PDF: {item.title}{" "}
-                    <span className="font-semibold opacity-70">({item.pages})</span>
+                    {item.pages && <span className="font-semibold opacity-70">({item.pages})</span>}
                   </span>
                   <Download className="size-4 shrink-0" />
                 </a>
