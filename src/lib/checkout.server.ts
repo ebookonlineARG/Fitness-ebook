@@ -55,7 +55,7 @@ export async function createPreference(opts: {
     pending: "https://fitness-ebook.pages.dev/?status=pending",
   },
   auto_return: "approved",      auto_return: "approved",
-      notification_url: `${base}/api/public/webhooks/mercadopago`,
+     // notification_url: "https://fitness-ebook.pages.dev/api/webhook-mercadopago",
     }),
   });
 
