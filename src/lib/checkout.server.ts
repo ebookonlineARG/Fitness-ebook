@@ -1,13 +1,16 @@
 /**
- * Server-only Mercado Pago + fulfillment helpers.
+ * Server-only Mercado Pago helpers.
  * Never imported from client code (blocked by *.server filename convention).
  */
-import { ebooks } from "./funnel-data";
 
 export const PRODUCT_TITLE = "Pack Definitivo Pérdida de Peso (6 E-books)";
 export const UNIT_PRICE = 22000;
 
-export type PreferenceResult = { initPoint: string; preferenceId: string; externalReference: string };
+export type PreferenceResult = {
+  initPoint: string;
+  preferenceId: string;
+  externalReference: string;
+};
 
 function mpToken() {
   const token = process.env["MERCADOPAGO_ACCESS_TOKEN"];
@@ -15,11 +18,17 @@ function mpToken() {
   return token;
 }
 
+function siteUrl(origin: string) {
+  return process.env["PUBLIC_SITE_URL"] ?? origin;
+}
+
 export async function createPreference(opts: {
   origin: string;
   email?: string;
   externalReference: string;
 }): Promise<PreferenceResult> {
+  const base = siteUrl(opts.origin);
+
   const res = await fetch("https://api.mercadopago.com/checkout/preferences", {
     method: "POST",
     headers: {
@@ -41,12 +50,12 @@ export async function createPreference(opts: {
       external_reference: opts.externalReference,
       statement_descriptor: "PACK EBOOKS",
       back_urls: {
-        success: `${opts.origin}/thank-you?ref=${opts.externalReference}`,
-        pending: `${opts.origin}/thank-you?ref=${opts.externalReference}`,
-        failure: `${opts.origin}/?pago=fallido`,
+        success: `${base}/thank-you`,
+        failure: `${base}/?status=failure`,
+        pending: `${base}/?status=pending`,
       },
       auto_return: "approved",
-      notification_url: `${opts.origin}/api/public/webhooks/mercadopago`,
+      notification_url: `${base}/api/public/webhooks/mercadopago`,
     }),
   });
 
@@ -75,41 +84,4 @@ export async function getPayment(paymentId: string): Promise<MpPayment | null> {
   });
   if (!res.ok) return null;
   return (await res.json()) as MpPayment;
-}
-
-/** Storage paths of the 6 PDFs inside the private `ebooks` bucket. */
-export const pdfPaths = ebooks.map((book) => `${book.id}.pdf`);
-
-export async function signDownloadUrls(): Promise<{ title: string; url: string | null }[]> {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  return Promise.all(
-    ebooks.map(async (book, index) => {
-      const { data } = await supabaseAdmin.storage
-        .from("ebooks")
-        .createSignedUrl(pdfPaths[index]!, 60 * 60 * 24 * 7);
-      return { title: book.title, url: data?.signedUrl ?? null };
-    }),
-  );
-}
-
-export async function sendDeliveryEmail(email: string, links: { title: string; url: string | null }[]) {
-  const apiKey = process.env["RESEND_API_KEY"];
-  if (!apiKey || !email) return false;
-  const from = process.env["RESEND_FROM_EMAIL"] ?? "onboarding@resend.dev";
-  const items = links
-    .filter((link) => link.url)
-    .map((link) => `<li><a href="${link.url}">${link.title}</a></li>`)
-    .join("");
-
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      from,
-      to: [email],
-      subject: "Tu Pack Definitivo de Pérdida de Peso (6 e-books)",
-      html: `<h2>¡Gracias por tu compra!</h2><p>Acá están tus 6 e-books en PDF:</p><ul>${items}</ul><p>Los links vencen en 7 días. Descargalos y guardalos.</p>`,
-    }),
-  });
-  return res.ok;
 }
