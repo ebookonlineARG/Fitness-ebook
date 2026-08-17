@@ -7,6 +7,7 @@ import { PainPoints } from "@/components/funnel/PainPoints";
 import { TruthSection } from "@/components/funnel/TruthSection";
 import { BundleGrid } from "@/components/funnel/BundleGrid";
 import { ValueStack } from "@/components/funnel/ValueStack";
+import { Author } from "@/components/funnel/Author";
 import { Testimonials } from "@/components/funnel/Testimonials";
 import { Guarantee } from "@/components/funnel/Guarantee";
 import { Faq } from "@/components/funnel/Faq";
@@ -45,6 +46,7 @@ function Index() {
       <TruthSection />
       <BundleGrid />
       <ValueStack />
+      <Author />
       <Testimonials />
       <Guarantee />
       <Faq />
