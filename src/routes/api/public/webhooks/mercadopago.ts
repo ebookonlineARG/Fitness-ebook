@@ -27,7 +27,7 @@ async function handle(request: Request) {
     return new Response(JSON.stringify({ ignored: true }), { status: 200 });
   }
 
-  const { getPayment, signDownloadUrls, sendDeliveryEmail } = await import("@/lib/checkout.server");
+  const { getPayment } = await import("@/lib/checkout.server");
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
   // Source of truth is Mercado Pago's API, never the webhook payload.
@@ -64,11 +64,6 @@ async function handle(request: Request) {
     }
   }
 
-  if (payment.status === "approved" && email && orderId) {
-    const downloads = await signDownloadUrls();
-    const sent = await sendDeliveryEmail(email, downloads);
-    if (sent) await supabaseAdmin.from("orders").update({ email_sent: true }).eq("id", orderId);
-  }
 
   return new Response(JSON.stringify({ ok: true }), {
     status: 200,

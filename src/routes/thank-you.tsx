@@ -1,23 +1,23 @@
 import { useEffect } from "react";
 import { createFileRoute, Link, useSearch } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
-import { useServerFn } from "@tanstack/react-start";
-import { CheckCircle2, Clock, Download, Loader2, Mail } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Download, ShieldCheck } from "lucide-react";
 import { z } from "zod";
 
-import { getOrderAccess } from "@/lib/checkout.functions";
+import { ebookFiles } from "@/lib/ebook-files";
 import { OFFER_PRICE } from "@/lib/funnel-data";
 import { trackPurchase } from "@/lib/tracking";
 
 const TITLE = "¡Compra confirmada! Descargá tus 6 e-books";
 const DESCRIPTION =
-  "Acceso inmediato a los 6 e-books en PDF del Pack Definitivo de Pérdida de Peso. Descargalos acá o revisá tu email.";
+  "Acceso inmediato a los 6 e-books en PDF del Pack Definitivo de Pérdida de Peso. Descargalos directamente desde esta página.";
 
 export const Route = createFileRoute("/thank-you")({
   validateSearch: z.object({
-    ref: z.string().optional(),
-    session_id: z.string().optional(),
+    status: z.string().optional(),
+    collection_status: z.string().optional(),
+    collection_id: z.string().optional(),
     payment_id: z.string().optional(),
+    ref: z.string().optional(),
   }),
   head: () => ({
     meta: [
@@ -34,80 +34,71 @@ export const Route = createFileRoute("/thank-you")({
 });
 
 function ThankYou() {
-  const { ref, session_id } = useSearch({ from: "/thank-you" });
-  const reference = ref ?? session_id;
-  const fetchAccess = useServerFn(getOrderAccess);
-
-  const { data, isPending } = useQuery({
-    queryKey: ["order-access", reference],
-    enabled: Boolean(reference),
-    refetchInterval: (query) => (query.state.data?.status === "approved" ? false : 4000),
-    queryFn: () => fetchAccess({ data: { ref: reference! } }),
-  });
-
-  const approved = data?.status === "approved";
+  const search = useSearch({ from: "/thank-you" });
+  const paymentId = search.collection_id ?? search.payment_id;
+  const status = search.status ?? search.collection_status;
+  const approved = status === "approved" && Boolean(paymentId);
 
   useEffect(() => {
-    if (approved) trackPurchase(data?.amount ?? OFFER_PRICE);
-  }, [approved, data?.amount]);
+    if (approved) trackPurchase(OFFER_PRICE);
+  }, [approved]);
 
   return (
     <main className="mx-auto flex min-h-screen max-w-3xl flex-col justify-center px-4 py-16">
       <div className="surface-card p-7 sm:p-10">
         {approved ? (
           <>
-            <span className="flex size-14 items-center justify-center rounded-full bg-success/15 text-success">
+            <span className="flex size-14 items-center justify-center rounded-full bg-success/20 text-success">
               <CheckCircle2 className="size-8" />
             </span>
-            <h1 className="mt-5 text-2xl font-black sm:text-4xl">¡Listo! Tu pack está desbloqueado</h1>
+            <h1 className="mt-5 text-2xl font-black sm:text-4xl">
+              ¡Felicitaciones! Tu pago fue aprobado
+            </h1>
             <p className="mt-3 text-muted-foreground">
-              Descargá los 6 e-books ahora. También te los enviamos por email para que los tengas
-              siempre a mano.
+              Tu compra está confirmada (pago #{paymentId}). Descargá los 6 e-books en PDF ahora
+              mismo desde los botones de abajo. Guardalos en tu celular o compu: el acceso es de por
+              vida.
             </p>
 
             <div className="mt-7 space-y-3">
-              {data.downloads.map((item) =>
-                item.url ? (
-                  <a
-                    key={item.title}
-                    href={item.url}
-                    className="flex items-center justify-between gap-3 rounded-xl bg-success px-4 py-3 text-sm font-bold text-success-foreground transition-transform hover:scale-[1.01]"
-                  >
-                    <span>Descargar E-book en PDF: {item.title}</span>
-                    <Download className="size-4 shrink-0" />
-                  </a>
-                ) : (
-                  <div
-                    key={item.title}
-                    className="flex items-center justify-between gap-3 rounded-xl border border-border px-4 py-3 text-sm text-muted-foreground"
-                  >
-                    <span>{item.title}</span>
-                    <span className="text-xs">Preparando archivo…</span>
-                  </div>
-                ),
-              )}
+              {ebookFiles.map((item) => (
+                <a
+                  key={item.id}
+                  href={item.url}
+                  download
+                  className="flex items-center justify-between gap-3 rounded-xl bg-success px-4 py-3 text-sm font-black text-success-foreground transition-transform hover:scale-[1.01]"
+                >
+                  <span>
+                    Descargar PDF: {item.title}{" "}
+                    <span className="font-semibold opacity-70">({item.pages})</span>
+                  </span>
+                  <Download className="size-4 shrink-0" />
+                </a>
+              ))}
             </div>
 
             <p className="mt-6 inline-flex items-center gap-2 text-xs text-muted-foreground">
-              <Mail className="size-3.5" /> Revisá tu casilla (y spam) si no ves el email en 5 minutos.
+              <ShieldCheck className="size-3.5 text-success" /> Garantía de 7 días. Si algo no te
+              cierra, te devolvemos el 100%.
             </p>
           </>
         ) : (
           <>
-            <span className="flex size-14 items-center justify-center rounded-full bg-surface-2 text-success">
-              {isPending ? <Loader2 className="size-7 animate-spin" /> : <Clock className="size-7" />}
+            <span className="flex size-14 items-center justify-center rounded-full bg-danger/20 text-danger">
+              <AlertTriangle className="size-7" />
             </span>
-            <h1 className="mt-5 text-2xl font-black sm:text-3xl">Estamos confirmando tu pago</h1>
+            <h1 className="mt-5 text-2xl font-black sm:text-3xl">No detectamos un pago válido</h1>
             <p className="mt-3 text-muted-foreground">
-              {reference
-                ? "Mercado Pago puede tardar algunos segundos en acreditar la operación. Dejá esta página abierta: los enlaces de descarga aparecen automáticamente."
-                : "No encontramos la referencia de tu compra. Si ya pagaste, revisá tu email o escribinos."}
+              Esta página muestra las descargas solo cuando Mercado Pago confirma el pago como
+              aprobado. Si tu pago quedó pendiente, esperá unos minutos y volvé a entrar desde el
+              mail de Mercado Pago. Si todavía no compraste, podés hacerlo desde la página
+              principal.
             </p>
             <Link
               to="/"
-              className="mt-7 inline-flex rounded-xl border border-border px-4 py-2 text-sm font-semibold"
+              className="mt-7 inline-flex rounded-xl bg-success px-5 py-3 text-sm font-black text-success-foreground"
             >
-              Volver al inicio
+              Ir a la página de compra
             </Link>
           </>
         )}
