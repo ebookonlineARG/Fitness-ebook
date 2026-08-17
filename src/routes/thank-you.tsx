@@ -11,13 +11,13 @@ const TITLE = "¡Compra confirmada! Descargá tus 6 e-books";
 const DESCRIPTION =
   "Acceso inmediato a los 6 e-books en PDF del Pack Definitivo de Pérdida de Peso. Descargalos directamente desde esta página.";
 
-// Permitimos cualquier parámetro extra que Mercado Pago decida enviar
+// Acepta tanto string como number para IDs y status que Mercado Pago/TanStack Router puedan transformar
 const searchSchema = z
   .object({
-    status: z.string().optional(),
-    collection_status: z.string().optional(),
-    collection_id: z.string().optional(),
-    payment_id: z.string().optional(),
+    status: z.union([z.string(), z.number()]).optional(),
+    collection_status: z.union([z.string(), z.number()]).optional(),
+    collection_id: z.union([z.string(), z.number()]).optional(),
+    payment_id: z.union([z.string(), z.number()]).optional(),
     ref: z.string().optional(),
   })
   .passthrough();
@@ -39,12 +39,20 @@ export const Route = createFileRoute("/thank-you")({
 });
 
 function ThankYou() {
-  const search = useSearch({ from: "/thank-you" }) as Record<string, string | undefined>;
-  
-  const paymentId = search.collection_id || search.payment_id;
-  const status = search.status || search.collection_status;
-  
-  // Si el status es approved, se habilita la descarga
+  const search = useSearch({ from: "/thank-you" });
+
+  const paymentId = search.collection_id
+    ? String(search.collection_id)
+    : search.payment_id
+      ? String(search.payment_id)
+      : null;
+
+  const status = search.status
+    ? String(search.status)
+    : search.collection_status
+      ? String(search.collection_status)
+      : null;
+
   const approved = status === "approved";
 
   useEffect(() => {
