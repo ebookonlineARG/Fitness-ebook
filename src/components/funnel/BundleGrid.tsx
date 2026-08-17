@@ -11,7 +11,7 @@ export function BundleGrid() {
           <span className="text-gradient-green text-shadow-heading">(6 e-books)</span>
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-center text-muted-foreground">
-          Comprás el libro principal y los otros 5 se suman gratis. Sin upsells escondidos.
+          95 páginas en total. Comprás el libro principal y los otros 5 se suman gratis. Sin upsells escondidos.
         </p>
 
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -29,8 +29,8 @@ export function BundleGrid() {
                   src={book.cover}
                   alt={`Portada de ${book.title}`}
                   loading="lazy"
-                  width={768}
-                  height={1024}
+                  width={563}
+                  height={745}
                   className="w-20 shrink-0 drop-shadow-xl"
                 />
                 <div>

@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { Star } from "lucide-react";
-import heroBundle from "@/assets/hero-bundle.png";
+import heroStack from "@/assets/hero-stack.jpg.asset.json";
 import { CtaButton } from "./CtaButton";
 import { formatARS, MAIN_PRICE, OFFER_PRICE, TOTAL_VALUE } from "@/lib/funnel-data";
 
@@ -65,14 +65,14 @@ export function Hero() {
         >
           <div className="surface-card p-4 sm:p-8">
             <img
-              src={heroBundle}
+              src={heroStack.url}
               alt="Pack de 6 e-books en PDF sobre pérdida de peso, nutrición y entrenamiento"
-              width={1280}
+              width={1024}
               height={1024}
               className="mx-auto w-full max-w-lg drop-shadow-2xl"
             />
             <p className="mt-3 text-center text-xs uppercase tracking-widest text-muted-foreground">
-              6 e-books en PDF · descarga inmediata
+              6 e-books en PDF · 95 páginas · descarga inmediata
             </p>
           </div>
         </motion.div>
