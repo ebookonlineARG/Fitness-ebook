@@ -27,7 +27,7 @@ async function handle(request: Request) {
     return new Response(JSON.stringify({ ignored: true }), { status: 200 });
   }
 
-  const { getPayment, signDownloadUrls, sendDeliveryEmail } = await import("@/lib/checkout.server");
+  const { getPayment } = await import("@/lib/checkout.server");
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
   // Source of truth is Mercado Pago's API, never the webhook payload.
