@@ -13,6 +13,9 @@ import { Guarantee } from "@/components/funnel/Guarantee";
 import { Faq } from "@/components/funnel/Faq";
 import { Footer } from "@/components/funnel/Footer";
 import { StickyCta } from "@/components/funnel/StickyCta";
+import { TrackedSection } from "@/components/funnel/TrackedSection";
+import { useFunnelTracking } from "@/hooks/use-funnel-tracking";
+import { initAnalytics } from "@/lib/analytics";
 import { trackPageView } from "@/lib/tracking";
 
 const TITLE = "Pack Definitivo Pérdida de Peso — 6 E-books por $22.000";
@@ -35,21 +38,40 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   useEffect(() => {
-    trackPageView();
+    void initAnalytics().then(() => trackPageView());
   }, []);
+  useFunnelTracking();
 
   return (
     <main>
       <AnnouncementBar />
-      <Hero />
-      <PainPoints />
-      <TruthSection />
-      <BundleGrid />
-      <ValueStack />
-      <Author />
-      <Testimonials />
-      <Guarantee />
-      <Faq />
+      <TrackedSection id="hero">
+        <Hero />
+      </TrackedSection>
+      <TrackedSection id="dolores">
+        <PainPoints />
+      </TrackedSection>
+      <TrackedSection id="verdad">
+        <TruthSection />
+      </TrackedSection>
+      <TrackedSection id="ebooks">
+        <BundleGrid />
+      </TrackedSection>
+      <TrackedSection id="precio">
+        <ValueStack />
+      </TrackedSection>
+      <TrackedSection id="autor">
+        <Author />
+      </TrackedSection>
+      <TrackedSection id="testimonios">
+        <Testimonials />
+      </TrackedSection>
+      <TrackedSection id="garantia">
+        <Guarantee />
+      </TrackedSection>
+      <TrackedSection id="faq">
+        <Faq />
+      </TrackedSection>
       <Footer />
       <StickyCta />
     </main>

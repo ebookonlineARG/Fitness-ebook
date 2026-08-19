@@ -3,7 +3,7 @@ import { Loader2, ShieldCheck } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { startCheckout } from "@/lib/checkout.functions";
-import { trackInitiateCheckout } from "@/lib/tracking";
+import { trackCheckoutError, trackCtaClick, trackInitiateCheckout } from "@/lib/tracking";
 import { OFFER_PRICE } from "@/lib/funnel-data";
 import { cn } from "@/lib/utils";
 
@@ -12,6 +12,7 @@ type Props = {
   subtext?: string;
   className?: string;
   pulse?: boolean;
+  location?: string;
 };
 
 export function CtaButton({
@@ -19,13 +20,15 @@ export function CtaButton({
   subtext = "Pago único • Acceso inmediato • Garantía de 7 días",
   className,
   pulse = true,
+  location = "desconocido",
 }: Props) {
   const checkout = useServerFn(startCheckout);
   const [loading, setLoading] = useState(false);
 
   const handleClick = async () => {
     setLoading(true);
-    trackInitiateCheckout(OFFER_PRICE);
+    trackCtaClick(location);
+    trackInitiateCheckout(OFFER_PRICE, location);
     try {
       // 1. Try Cloudflare Pages Function endpoint
       const res = await fetch("/api/create-preference", {
