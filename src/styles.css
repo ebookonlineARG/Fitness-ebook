@@ -52,44 +52,44 @@
 
 :root {
   --radius: 0.75rem;
-  /* Deep Slate #0F172A */
-  --background: oklch(0.2077 0.0398 265.75);
-  /* Crisp White #FFFFFF */
-  --foreground: oklch(1 0 0);
-  /* Card Slate #1E293B */
-  --surface: oklch(0.2795 0.0368 259.9);
-  --surface-2: oklch(0.3416 0.0362 259.9);
-  --card: oklch(0.2795 0.0368 259.9);
-  --card-foreground: oklch(1 0 0);
-  --popover: oklch(0.2795 0.0368 259.9);
-  --popover-foreground: oklch(1 0 0);
-  /* Emerald Green #22C55E */
-  --primary: oklch(0.7227 0.192 149.58);
-  --primary-foreground: oklch(0.19 0.05 155);
-  --secondary: oklch(0.3416 0.0362 259.9);
-  --secondary-foreground: oklch(1 0 0);
-  --muted: oklch(0.3416 0.0362 259.9);
-  --muted-foreground: oklch(0.76 0.025 258);
-  --accent: oklch(0.7227 0.192 149.58);
-  --accent-foreground: oklch(0.19 0.05 155);
-  /* Crimson Red #EF4444 */
-  --destructive: oklch(0.6368 0.2078 25.33);
-  --destructive-foreground: oklch(1 0 0);
-  --danger: oklch(0.6368 0.2078 25.33);
-  --danger-foreground: oklch(1 0 0);
-  --success: oklch(0.7227 0.192 149.58);
-  --success-foreground: oklch(0.19 0.05 155);
-  --gold: oklch(0.83 0.16 85);
-  --heading: oklch(1 0 0);
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 16%);
-  --ring: oklch(0.7227 0.192 149.58);
+  /* Navy #0A1128 */
+  --background: #0a1128;
+  /* Blanco puro */
+  --foreground: #ffffff;
+  /* Cobalto #1C3144 para tarjetas y bloques */
+  --surface: #1c3144;
+  --surface-2: #24405c;
+  --card: #1c3144;
+  --card-foreground: #ffffff;
+  --popover: #1c3144;
+  --popover-foreground: #ffffff;
+  /* Volt / Amarillo neón #FAFF00 con texto negro */
+  --primary: #faff00;
+  --primary-foreground: #121212;
+  --secondary: #24405c;
+  --secondary-foreground: #ffffff;
+  --muted: #24405c;
+  --muted-foreground: #b8c4d6;
+  --accent: #faff00;
+  --accent-foreground: #121212;
+  /* Rojo vívido #FF2E38 */
+  --destructive: #ff2e38;
+  --destructive-foreground: #ffffff;
+  --danger: #ff2e38;
+  --danger-foreground: #ffffff;
+  --success: #faff00;
+  --success-foreground: #121212;
+  --gold: #faff00;
+  --heading: #ffffff;
+  --border: oklch(1 0 0 / 14%);
+  --input: oklch(1 0 0 / 18%);
+  --ring: #faff00;
 }
 
 .dark {
-  --background: oklch(0.2077 0.0398 265.75);
-  --foreground: oklch(1 0 0);
-  --heading: oklch(1 0 0);
+  --background: #0a1128;
+  --foreground: #ffffff;
+  --heading: #ffffff;
 }
 
 @layer base {
