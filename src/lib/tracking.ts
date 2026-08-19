@@ -1,7 +1,9 @@
 /**
- * Meta Pixel + Google Analytics event helpers.
- * Safe no-ops when the pixels are not installed or during SSR.
+ * Single tracking layer: Meta Pixel + Google Analytics + PostHog.
+ * Safe no-ops when a destination is not installed or during SSR.
  */
+import { capture } from "./analytics";
+
 type Params = Record<string, unknown>;
 
 declare global {
@@ -11,6 +13,8 @@ declare global {
   }
 }
 
+const PRODUCT = "Pack Definitivo Pérdida de Peso";
+
 export function trackEvent(name: string, params: Params = {}) {
   if (typeof window === "undefined") return;
   try {
@@ -19,12 +23,37 @@ export function trackEvent(name: string, params: Params = {}) {
   } catch {
     /* tracking must never break checkout */
   }
+  capture(name.replace(/([a-z0-9])([A-Z])/g, "$1_$2").toLowerCase(), params);
 }
 
-export const trackPageView = () => trackEvent("PageView");
+export const trackPageView = () => trackEvent("PageView", { page: window.location.pathname });
 
-export const trackInitiateCheckout = (value: number) =>
-  trackEvent("InitiateCheckout", { value, currency: "ARS", content_name: "Pack Definitivo Pérdida de Peso" });
+export const trackSectionView = (section: string) =>
+  trackEvent("SectionView", { section });
 
-export const trackPurchase = (value: number) =>
-  trackEvent("Purchase", { value, currency: "ARS", content_name: "Pack Definitivo Pérdida de Peso" });
+export const trackScrollDepth = (depth: number) => trackEvent("ScrollDepth", { depth });
+
+export const trackCtaClick = (location: string) => trackEvent("CtaClick", { location });
+
+export const trackFaqOpen = (question: string) => trackEvent("FaqOpen", { question });
+
+export const trackInitiateCheckout = (value: number, location?: string) =>
+  trackEvent("InitiateCheckout", {
+    value,
+    currency: "ARS",
+    content_name: PRODUCT,
+    ...(location ? { location } : {}),
+  });
+
+export const trackCheckoutError = (message: string) =>
+  trackEvent("CheckoutError", { message });
+
+export const trackPurchase = (value: number, paymentId?: string | null) =>
+  trackEvent("Purchase", {
+    value,
+    currency: "ARS",
+    content_name: PRODUCT,
+    ...(paymentId ? { payment_id: paymentId } : {}),
+  });
+
+export const trackPurchaseNotVerified = () => trackEvent("PurchaseNotVerified");
