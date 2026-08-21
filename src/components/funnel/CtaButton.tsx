@@ -55,6 +55,7 @@ export function CtaButton({
       throw new Error("No init_point returned");
     } catch (err) {
       console.error("Checkout initiation error:", err);
+      trackCheckoutError(err instanceof Error ? err.message : "unknown");
       toast.error("No pudimos abrir el checkout", {
         description: "Volvé a intentar en unos segundos o escribinos por WhatsApp.",
       });
