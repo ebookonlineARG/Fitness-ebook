@@ -19,6 +19,7 @@ export function StickyCta() {
         label="COMPRAR EL PACK · $22.000 ARS"
         subtext="Pago único · Garantía 7 días"
         pulse={false}
+        location="sticky_movil"
       />
     </div>
   );
