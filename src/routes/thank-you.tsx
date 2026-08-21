@@ -29,8 +29,12 @@ function ThankYou() {
 
   useEffect(() => {
     async function verifyPayment() {
+      await initAnalytics();
+      trackPageView();
+
       const currentUrl = window.location.search;
       if (!currentUrl) {
+        trackPurchaseNotVerified();
         setLoading(false);
         return;
       }
@@ -42,18 +46,20 @@ function ThankYou() {
         if (data.valid) {
           setApproved(true);
           setPaymentId(data.paymentId || null);
-          trackPurchase(OFFER_PRICE);
+          trackPurchase(OFFER_PRICE, data.paymentId ?? null);
         } else {
           setApproved(false);
+          trackPurchaseNotVerified();
         }
       } catch {
         setApproved(false);
+        trackPurchaseNotVerified();
       } finally {
         setLoading(false);
       }
     }
 
-    verifyPayment();
+    void verifyPayment();
   }, []);
 
   if (loading) {
