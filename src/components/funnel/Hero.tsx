@@ -43,7 +43,7 @@ export function Hero() {
           </div>
 
           <div className="mt-7 max-w-xl">
-            <CtaButton />
+            <CtaButton location="hero" />
           </div>
 
           <div className="mt-5 flex items-center gap-2 text-sm text-muted-foreground">

@@ -4,7 +4,8 @@ import { AlertTriangle, CheckCircle2, Download, Loader2, ShieldCheck } from "luc
 
 import { ebookFiles } from "@/lib/ebook-files";
 import { OFFER_PRICE } from "@/lib/funnel-data";
-import { trackPurchase } from "@/lib/tracking";
+import { initAnalytics } from "@/lib/analytics";
+import { trackPageView, trackPurchase, trackPurchaseNotVerified } from "@/lib/tracking";
 
 const TITLE = "¡Compra confirmada! Descargá tus 6 e-books";
 const DESCRIPTION =
@@ -28,8 +29,12 @@ function ThankYou() {
 
   useEffect(() => {
     async function verifyPayment() {
+      await initAnalytics();
+      trackPageView();
+
       const currentUrl = window.location.search;
       if (!currentUrl) {
+        trackPurchaseNotVerified();
         setLoading(false);
         return;
       }
@@ -41,18 +46,20 @@ function ThankYou() {
         if (data.valid) {
           setApproved(true);
           setPaymentId(data.paymentId || null);
-          trackPurchase(OFFER_PRICE);
+          trackPurchase(OFFER_PRICE, data.paymentId ?? null);
         } else {
           setApproved(false);
+          trackPurchaseNotVerified();
         }
       } catch {
         setApproved(false);
+        trackPurchaseNotVerified();
       } finally {
         setLoading(false);
       }
     }
 
-    verifyPayment();
+    void verifyPayment();
   }, []);
 
   if (loading) {

@@ -47,7 +47,7 @@ export function ValueStack() {
         </div>
 
         <div className="mt-6">
-          <CtaButton label="QUIERO EL PACK COMPLETO AHORA" />
+          <CtaButton label="QUIERO EL PACK COMPLETO AHORA" location="precio" />
         </div>
       </motion.div>
     </section>
