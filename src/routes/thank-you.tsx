@@ -4,7 +4,8 @@ import { AlertTriangle, CheckCircle2, Download, Loader2, ShieldCheck } from "luc
 
 import { ebookFiles } from "@/lib/ebook-files";
 import { OFFER_PRICE } from "@/lib/funnel-data";
-import { trackPurchase } from "@/lib/tracking";
+import { initAnalytics } from "@/lib/analytics";
+import { trackPageView, trackPurchase, trackPurchaseNotVerified } from "@/lib/tracking";
 
 const TITLE = "¡Compra confirmada! Descargá tus 6 e-books";
 const DESCRIPTION =
